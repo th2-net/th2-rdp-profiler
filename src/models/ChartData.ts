@@ -1,13 +1,13 @@
 export type Data = {
     timeSinceStartProcessing: number;
-    fetchedDiff: number;
-    fetchedBytesDiff: number;
-    fetchedBatchesDiff: number;
-    parseRequestedDiff: number;
-    parseRecievedDiff: number;
-    filterTotalDiff: number;
-    filterDiscardedDiff: number;
-    filterAcceptedDiff: number;
+    fetchedRate: number;
+    fetchedBytesRate: number;
+    fetchedBatchesRate: number;
+    parseRequestedRate: number;
+    parseReceivedRate: number;
+    filterTotalRate: number;
+    filterDiscardedRate: number;
+    filterAcceptedRate: number;
 }
 
 export default interface ChartData {

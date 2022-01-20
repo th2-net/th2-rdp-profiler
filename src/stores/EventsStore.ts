@@ -1,9 +1,7 @@
-// import KeepAlive from "../models/Event";
 import ChartData from "../models/ChartData";
 import PipelineStatus from "../models/Event";
 import ShowLines from "../models/ShowLines";
 import { Merger } from "../models/ChartData";
-import LastCounters from "../models/LastCounters";
 import fetchEvents from "../api/fetchEvents";
 import { runInAction, action, computed, makeObservable, observable } from "mobx";
 import { strictEqual } from "assert";
@@ -14,27 +12,15 @@ class EventsStore {
     chartData: ChartData = {
         "test": [],
     };
-    lastCounters: LastCounters = {
-        "test": {
-            fetchedLast: 0,
-            fetchedBytesLast: 0,
-            fetchedBatchesLast: 0,
-            parseRequestedLast: 0,
-            parseRecievedLast: 0,
-            filterTotalLast: 0,
-            filterDiscardedLast: 0,
-            filterAcceptedLast: 0,
-        }
-    }
     checkboxes: ShowLines = {
-        fetchedDiff: true,
-        fetchedBytesDiff: true,
-        fetchedBatchesDiff: true,
-        parseRequestedDiff: true,
-        parseRecievedDiff: true,
-        filterTotalDiff: true,
-        filterDiscardedDiff: true,
-        filterAcceptedDiff: true
+        fetchedRate: true,
+        fetchedBytesRate: true,
+        fetchedBatchesRate: true,
+        parseRequestedRate: true,
+        parseReceivedRate: true,
+        filterTotalRate: true,
+        filterDiscardedRate: true,
+        filterAcceptedRate: true
     }
     merger: Merger[] = [];
     lastMerger: number = 0;
@@ -42,10 +28,8 @@ class EventsStore {
 
     constructor() {
         makeObservable(this, {
-            // keepAlives: observable,
             pipelineStatuses: observable,
             chartData: observable,
-            lastCounters: observable,
             checkboxes: observable,
             merger: observable,
             lastMerger: observable,
@@ -65,53 +49,34 @@ class EventsStore {
                         this.chartData[stream] = [];
                         this.chartData[stream].push(
                             {timeSinceStartProcessing: 0,
-                            fetchedDiff: 0,
-                            fetchedBytesDiff: 0,
-                            fetchedBatchesDiff: 0,
-                            parseRequestedDiff: 0,
-                            parseRecievedDiff: 0,
-                            filterTotalDiff: 0,
-                            filterDiscardedDiff: 0,
-                            filterAcceptedDiff: 0});
-                        this.lastCounters[stream] = {
-                            fetchedLast: 0,
-                            fetchedBytesLast: 0,
-                            fetchedBatchesLast: 0,
-                            parseRequestedLast: 0,
-                            parseRecievedLast: 0,
-                            filterTotalLast: 0,
-                            filterDiscardedLast: 0,
-                            filterAcceptedLast: 0,
-                        }
+                            fetchedRate: 0,
+                            fetchedBytesRate: 0,
+                            fetchedBatchesRate: 0,
+                            parseRequestedRate: 0,
+                            parseReceivedRate: 0,
+                            filterTotalRate: 0,
+                            filterDiscardedRate: 0,
+                            filterAcceptedRate: 0});
                     })
                     this.isLoading = false;
                 })
             } else {
                 streams.forEach(stream => { 
+                    console.log(data.streams[stream].counters.parseReceived)
                     runInAction(() => {
                             this.chartData[stream].push(
                                 {
                                     timeSinceStartProcessing: data.streams[stream].timeSinceStartProcessing / 1000,
-                                    fetchedDiff: data.streams[stream].counters.fetched - this.lastCounters[stream].fetchedLast,
-                                    fetchedBytesDiff: data.streams[stream].counters.fetchedBytes - this.lastCounters[stream].fetchedBytesLast,
-                                    fetchedBatchesDiff: data.streams[stream].counters.fetchedBatches - this.lastCounters[stream].fetchedBatchesLast,
-                                    parseRequestedDiff: data.streams[stream].counters.parseRequested - this.lastCounters[stream].parseRequestedLast,
-                                    parseRecievedDiff: data.streams[stream].counters.parseRecieved - this.lastCounters[stream].parseRecievedLast,
-                                    filterTotalDiff: data.streams[stream].counters.filterTotal - this.lastCounters[stream].filterTotalLast,
-                                    filterDiscardedDiff: data.streams[stream].counters.filterDiscarded - this.lastCounters[stream].filterDiscardedLast,
-                                    filterAcceptedDiff: data.streams[stream].counters.filterAccepted - this.lastCounters[stream].filterAcceptedLast
+                                    fetchedRate: data.streams[stream].counters.fetched / (data.streams[stream].timeSinceStartProcessing / 1000),
+                                    fetchedBytesRate: data.streams[stream].counters.fetchedBytes / (data.streams[stream].timeSinceStartProcessing / 1000),
+                                    fetchedBatchesRate: data.streams[stream].counters.fetchedBatches / (data.streams[stream].timeSinceStartProcessing / 1000),
+                                    parseRequestedRate: data.streams[stream].counters.parseRequested / (data.streams[stream].timeSinceStartProcessing / 1000),
+                                    parseReceivedRate: data.streams[stream].counters.parseReceived / (data.streams[stream].timeSinceStartProcessing / 1000),
+                                    filterTotalRate: data.streams[stream].counters.filterTotal / (data.streams[stream].timeSinceStartProcessing / 1000),
+                                    filterDiscardedRate: data.streams[stream].counters.filterDiscarded / (data.streams[stream].timeSinceStartProcessing / 1000),
+                                    filterAcceptedRate: data.streams[stream].counters.filterAccepted / (data.streams[stream].timeSinceStartProcessing / 1000)
                                 }
                             )
-                            this.lastCounters[stream] = {
-                                fetchedLast: data.streams[stream].counters.fetched,
-                                fetchedBytesLast: data.streams[stream].counters.fetchedBytes,
-                                fetchedBatchesLast: data.streams[stream].counters.fetchedBatches,
-                                parseRequestedLast: data.streams[stream].counters.parseRequested,
-                                parseRecievedLast: data.streams[stream].counters.parseRecieved,
-                                filterTotalLast: data.streams[stream].counters.filterTotal,
-                                filterDiscardedLast: data.streams[stream].counters.filterDiscarded,
-                                filterAcceptedLast: data.streams[stream].counters.filterAccepted,
-                            }
                         }
                     )
                 })

@@ -1,11 +1,11 @@
 export default interface ShowLines {
-    fetchedDiff: boolean;
-    fetchedBytesDiff: boolean;
-    fetchedBatchesDiff: boolean;
-    parseRequestedDiff: boolean;
-    parseRecievedDiff: boolean;
-    filterTotalDiff: boolean;
-    filterDiscardedDiff: boolean;
-    filterAcceptedDiff: boolean;
+    fetchedRate: boolean;
+    fetchedBytesRate: boolean;
+    fetchedBatchesRate: boolean;
+    parseRequestedRate: boolean;
+    parseReceivedRate: boolean;
+    filterTotalRate: boolean;
+    filterDiscardedRate: boolean;
+    filterAcceptedRate: boolean;
     [attr: string]: boolean;
 }

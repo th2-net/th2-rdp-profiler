@@ -1,12 +1,5 @@
 import { NumberLiteralType } from "typescript";
 
-// export default interface KeepAlive {
-//     timestamp: number;
-//     scanCounter: number;
-//     different?: number;
-//     id?: string;
-// }
-
 export type Stream = {
     startTime: number;
     timeSinceStartProcessing: number;
@@ -15,7 +8,7 @@ export type Stream = {
         fetchedBytes: number;
         fetchedBatches: number;
         parseRequested: number;
-        parseRecieved: number;
+        parseReceived: number;
         filterTotal: number;
         filterDiscarded: number;
         filterAccepted: number;

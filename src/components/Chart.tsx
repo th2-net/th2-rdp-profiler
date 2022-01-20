@@ -43,43 +43,43 @@ function Chart({stream}: Props) {
                     <Legend />
                     <Line 
                         type="monotone"
-                        dataKey="fetchedDiff"
+                        dataKey="fetchedRate"
                         stroke="#8884d8"
                         activeDot={{ r: 8 }}
                     />
                     <Line 
                         type="monotone"
-                        dataKey="fetchedBytesDiff"
+                        dataKey="fetchedBytesRate"
                         stroke="#ff9900"
                         activeDot={{ r: 8 }}
                     />
                     <Line 
                         type="monotone"
-                        dataKey="fetchedBatchesDiff"
+                        dataKey="fetchedBatchesRate"
                         stroke="#ff00cc"
                         activeDot={{ r: 8 }}
                     />
                     <Line 
                         type="monotone"
-                        dataKey="parseRequestedDiff"
+                        dataKey="parseRequestedRate"
                         stroke="#f44336"
                         activeDot={{ r: 8 }}
                     />
                     <Line 
                         type="monotone"
-                        dataKey="parseRecievedDiff"
+                        dataKey="parseRecievedRate"
                         stroke="#2986cc"
                         activeDot={{ r: 8 }}
                     />
                     <Line 
                         type="monotone"
-                        dataKey="filterTotalDiff"
+                        dataKey="filterTotalRate"
                         stroke="#6aa84f"
                         activeDot={{ r: 8 }}
                     />
                     <Line 
                         type="monotone"
-                        dataKey="filterDiscardedDiff"
+                        dataKey="filterDiscardedRate"
                         stroke="#b45f06"
                         activeDot={{ r: 8 }}
                     />
