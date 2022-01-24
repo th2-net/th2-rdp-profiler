@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react-lite'; 
 import useEventsStore from '../hooks/useEventsStore';
-import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {createUseStyles} from "react-jss";
 
 type Props = {
@@ -15,7 +15,7 @@ const useStyles = createUseStyles({
     },
     name: {
         marginTop: "20px",
-        marginLeft: "200px",
+        textAlign: "center",
         fontWeight: "bold"
     }
 })
@@ -24,111 +24,14 @@ function Chart({stream}: Props) {
     const store = useEventsStore();
     const classes = useStyles();
 
-    function PrintFetchedRateLine() {
-        if (store.checkboxes["fetchedRate"] === false) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey="fetchedRate"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
 
-    function PrintFetchedBytesRateLine() {
-        if (store.checkboxes["fetchedBytesRate"] === false) {
+    function PrintRateLine(rate: string, color: string) {
+        if (store.checkboxes[rate] === false) {
             return(
                 <Line 
                 type="monotone"
-                dataKey="fetchedBytesRate"
-                stroke="#ff9900"
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
-
-    function PrintFetchedBatchesRateLine() {
-        if (store.checkboxes["fetchedBatchesRate"] === false) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey="fetchedBatchesRate"
-                stroke="#ff00cc"
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
-
-    function PrintParseRequestedRateLine() {
-        if (store.checkboxes["parseRequestedRate"] === false) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey="parseRequestedRate"
-                stroke="#f44336"
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
-
-    function PrintParseRecievedRateLine() {
-        if (store.checkboxes["parseRecievedRate"] === false) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey="parseRecievedRate"
-                stroke="#2986cc"
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
-    
-    function PrintFilterTotalRateLine() {
-        if (store.checkboxes["filterTotalRate"] === false) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey="filterTotalRate"
-                stroke="#6aa84f"
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
-
-    function PrintFilterDiscardedRateLine() {
-        if (store.checkboxes["filterDiscardedRate"] === false) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey="filterDiscardedRate"
-                stroke="#b45f06"
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
-
-    function PrintFilterAcceptedRateLine() {
-        if (store.checkboxes["filterAcceptedRate"] === false) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey="filterAcceptedRate"
-                stroke="#5b5b5b"
+                dataKey={rate}
+                stroke={color}
                 activeDot={{ r: 8 }}
                 isAnimationActive={false}
                 />
@@ -140,33 +43,34 @@ function Chart({stream}: Props) {
         return(
             <div>
                 <br/>
-                <span className={classes.name}>{stream}:</span>
+                <div className={classes.name}>{stream}:</div>
                 <br/>
-                <LineChart 
-                    width={500}
-                    height={300}
-                    data={store.chartData[stream].slice()}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5
-                    }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="timeSinceStartProcessing" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    {PrintFetchedRateLine()}
-                    {PrintFetchedBytesRateLine()}
-                    {PrintFetchedBatchesRateLine()}
-                    {PrintParseRequestedRateLine()}
-                    {PrintParseRecievedRateLine()}
-                    {PrintFilterTotalRateLine()}
-                    {PrintFilterDiscardedRateLine()}
-                    {PrintFilterAcceptedRateLine()}   
-                </LineChart>
+                <ResponsiveContainer width="95%" height={400}>
+                    <LineChart 
+                        data={store.chartData[stream].slice()}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="timeSinceStartProcessing" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        {PrintRateLine("fetchedRate", "#8884d8")}
+                        {PrintRateLine("fetchedBytesRate", "#ff9900")}
+                        {PrintRateLine("fetchedBatchesRate", "#ff00cc")}
+                        {PrintRateLine("parseRequestedRate", "#f44336")}
+                        {PrintRateLine("parseRecievedRate", "#2986cc")}
+                        {PrintRateLine("filterTotalRate", "#6aa84f")}
+                        {PrintRateLine("filterDiscardedRate", "#b45f06")}
+                        {PrintRateLine("filterAcceptedRate", "#5b5b5b")}
+                    </LineChart>
+                </ResponsiveContainer>
+                
             </div>
         )
     } else {
