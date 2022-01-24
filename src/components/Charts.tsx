@@ -15,7 +15,7 @@ function Charts() {
     } else {
         return(
             <div>
-                {/* <Checkboxes /> */}
+                <Checkboxes />
                 {streams.map((stream) => <Chart stream={stream}/>)}
                 <MergerChart/>
             </div>

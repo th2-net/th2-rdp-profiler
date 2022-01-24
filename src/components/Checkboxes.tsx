@@ -1,38 +1,39 @@
 import React, {useEffect} from 'react';
 import {observer} from 'mobx-react-lite'; 
 import useEventsStore from '../hooks/useEventsStore';
+import {createUseStyles} from "react-jss";
+
+const useStyles = createUseStyles({
+    checkboxes: {
+        marginTop: "15px",
+        marginLeft: "30px"
+    }
+})
 
 function Checkboxes() {
     const store = useEventsStore();
-    // fetched: number;
-    //     fetchedBytes: number;
-    //     fetchedBatches: number;
-    //     parseRequested: number;
-    //     parseRecieved: number;
-    //     filterTotal: number;
-    //     filterDiscarded: number;
-    //     filterAccepted: number;
+    const classes = useStyles();
+        
     function ClickCheckbox(str: string) {
-        console.log(str);
         const checkbox: HTMLInputElement | null = document.querySelector(`#${str}`);
-        // if (checkbox?.checked === true) {
-        //     store.
-        // } else {
-
-        // }
+        if (checkbox?.checked !== undefined) {
+            store.showLine(str, checkbox.checked);
+        }
     }
 
     return(
-        <div>
-            <input type="checkbox" name="fetchedDiff" id="fetchedDiff" onClick={() => ClickCheckbox("fetchedDiff")}/> fetchedDiff
-            <input type="checkbox" name="fetchedBytesDiff" id="fetchedBytesDiff" onClick={() => ClickCheckbox("fetchedBytesDiff")} /> fetchedBytesDiff
-            <input type="checkbox" name="fetchedBatchesDiff" id="fetchedBatchesDiff" onClick={() => ClickCheckbox("fetchedBatchesDiff")} /> fetchedBatchesDiff
-            <input type="checkbox" name="parseRequestedDiff" id="parseRequestedDiff" onClick={() => ClickCheckbox("parseRequestedDiff")} /> parseRequestedDiff
+        <div className={classes.checkboxes}>
+            Choose to disable:
             <br/>
-            <input type="checkbox" name="parseRecievedDiff" id="parseRecievedDiff" onClick={() => ClickCheckbox("parseRecievedDiff")} /> parseRecievedDiff
-            <input type="checkbox" name="filterTotalDiff" id="filterTotalDiff" onClick={() => ClickCheckbox("filterTotalDiff")} /> filterTotalDiff
-            <input type="checkbox" name="filterDiscardedDiff" id="filterDiscardedDiff" onClick={() => ClickCheckbox("filterDiscardedDiff")} /> filterDiscardedDiff
-            <input type="checkbox" name="filterAcceptedDiff" id="filterAcceptedDiff" onClick={() => ClickCheckbox("filterAcceptedDiff")} /> filterAcceptedDiff
+            <input type="checkbox" name="fetchedRate" id="fetchedRate" onClick={() => ClickCheckbox("fetchedRate")}/> fetchedRate
+            <input type="checkbox" name="fetchedBytesRate" id="fetchedBytesRate" onClick={() => ClickCheckbox("fetchedBytesRate")} /> fetchedBytesRate
+            <input type="checkbox" name="fetchedBatchesRate" id="fetchedBatchesRate" onClick={() => ClickCheckbox("fetchedBatchesRate")} /> fetchedBatchesRate
+            <input type="checkbox" name="parseRequestedRate" id="parseRequestedRate" onClick={() => ClickCheckbox("parseRequestedRate")} /> parseRequestedRate
+            <br/>
+            <input type="checkbox" name="parseRecievedRate" id="parseRecievedRate" onClick={() => ClickCheckbox("parseRecievedRate")} /> parseRecievedRate
+            <input type="checkbox" name="filterTotalRate" id="filterTotalRate" onClick={() => ClickCheckbox("filterTotalRate")} /> filterTotalRate
+            <input type="checkbox" name="filterDiscardedRate" id="filterDiscardedRate" onClick={() => ClickCheckbox("filterDiscardedRate")} /> filterDiscardedRate
+            <input type="checkbox" name="filterAcceptedRate" id="filterAcceptedRate" onClick={() => ClickCheckbox("filterAcceptedRate")} /> filterAcceptedRate
         </div>
     )
 }

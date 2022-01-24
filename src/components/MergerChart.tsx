@@ -2,12 +2,26 @@ import React, {useEffect} from 'react';
 import {observer} from 'mobx-react-lite'; 
 import useEventsStore from '../hooks/useEventsStore';
 import {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import {createUseStyles} from "react-jss";
+
+const useStyles = createUseStyles({
+    chart: {
+        marginTop: "15px"
+    },
+    name: {
+        marginTop: "20px",
+        marginLeft: "230px",
+        fontWeight: "bold"
+    }
+})
 
 function MergerChart() {
     const store = useEventsStore();
+    const classes = useStyles();
+
     return(
-        <div>
-            Merger:
+        <div className={classes.chart}>
+            <span className={classes.name}>Merger:</span>
             <LineChart 
                 width={500}
                 height={300}

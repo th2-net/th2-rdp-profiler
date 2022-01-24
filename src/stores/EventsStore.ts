@@ -13,14 +13,14 @@ class EventsStore {
         "test": [],
     };
     checkboxes: ShowLines = {
-        fetchedRate: true,
-        fetchedBytesRate: true,
-        fetchedBatchesRate: true,
-        parseRequestedRate: true,
-        parseReceivedRate: true,
-        filterTotalRate: true,
-        filterDiscardedRate: true,
-        filterAcceptedRate: true
+        fetchedRate: false,
+        fetchedBytesRate: false,
+        fetchedBatchesRate: false,
+        parseRequestedRate: false,
+        parseRecievedRate: false,
+        filterTotalRate: false,
+        filterDiscardedRate: false,
+        filterAcceptedRate: false
     }
     merger: Merger[] = [];
     lastMerger: number = 0;
@@ -62,7 +62,6 @@ class EventsStore {
                 })
             } else {
                 streams.forEach(stream => { 
-                    console.log(data.streams[stream].counters.parseReceived)
                     runInAction(() => {
                             this.chartData[stream].push(
                                 {
@@ -90,14 +89,13 @@ class EventsStore {
             eventSource.close();
         })
     }
-    // showLine(str: string, fl: boolean) 
-    //     if (fl) {
+    showLine(str: string, fl: boolean) {
+        runInAction(() => {
+            this.checkboxes[str] = fl;
             
-    //         runInAction(() => {
-    //             this.checkboxes[] = true;
-    //         })
-    //     }
-    // }
+        })
+        console.log(this.checkboxes[str]);
+    }
 }
 
 export default EventsStore;

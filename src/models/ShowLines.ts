@@ -3,7 +3,7 @@ export default interface ShowLines {
     fetchedBytesRate: boolean;
     fetchedBatchesRate: boolean;
     parseRequestedRate: boolean;
-    parseReceivedRate: boolean;
+    parseRecievedRate: boolean;
     filterTotalRate: boolean;
     filterDiscardedRate: boolean;
     filterAcceptedRate: boolean;
