@@ -65,6 +65,11 @@ class EventsStore {
             } else {
                 streams.forEach(stream => { 
                     if (this.chartData[stream].lastTimestamp !== data.streams[stream].timeSinceStartProcessing) {
+                        if (this.chartData[stream].data.length > 10) {
+                            runInAction(() => {
+                                this.chartData[stream].data.shift();
+                            })
+                        }
                         runInAction(() => {
                                 this.chartData[stream].data.push(
                                     {
