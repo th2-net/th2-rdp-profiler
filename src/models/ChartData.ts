@@ -11,7 +11,11 @@ export type Data = {
 }
 
 export default interface ChartData {
-    [stream: string]: Data[];
+    [stream: string]: {
+        data: Data[];
+        lastTimestamp?: number;
+    }
+
 }
 
 export type Merger = {

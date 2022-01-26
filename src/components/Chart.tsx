@@ -47,7 +47,7 @@ function Chart({stream}: Props) {
                 <br/>
                 <ResponsiveContainer width="95%" height={400}>
                     <LineChart 
-                        data={store.chartData[stream].slice()}
+                        data={store.chartData[stream].data.slice()}
                         margin={{
                             top: 5,
                             right: 30,
