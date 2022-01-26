@@ -23,7 +23,7 @@ function Form() {
     }
     return(
         <div className={classes.form}>
-            <input type="text" placeholder="enter link"/>
+            <input type="text" placeholder="enter link" id="link_input"/>
             <button onClick={() => pushBottom()}>Get</button>
         </div>
     )

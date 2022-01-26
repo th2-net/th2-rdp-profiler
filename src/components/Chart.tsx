@@ -26,7 +26,7 @@ function Chart({stream}: Props) {
 
 
     function PrintRateLine(rate: string, color: string) {
-        if (store.checkboxes[rate] === false) {
+        if (store.checkboxes[rate] === true) {
             return(
                 <Line 
                 type="monotone"

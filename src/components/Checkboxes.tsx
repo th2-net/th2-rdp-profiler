@@ -23,17 +23,17 @@ function Checkboxes() {
 
     return(
         <div className={classes.checkboxes}>
-            Choose to disable:
+            Choose to show:
             <br/>
-            <input type="checkbox" name="fetchedRate" id="fetchedRate" onClick={() => ClickCheckbox("fetchedRate")}/> fetchedRate
-            <input type="checkbox" name="fetchedBytesRate" id="fetchedBytesRate" onClick={() => ClickCheckbox("fetchedBytesRate")} /> fetchedBytesRate
-            <input type="checkbox" name="fetchedBatchesRate" id="fetchedBatchesRate" onClick={() => ClickCheckbox("fetchedBatchesRate")} /> fetchedBatchesRate
-            <input type="checkbox" name="parseRequestedRate" id="parseRequestedRate" onClick={() => ClickCheckbox("parseRequestedRate")} /> parseRequestedRate
+            <input type="checkbox" name="fetchedRate" id="fetchedRate" defaultChecked={true} onClick={() => ClickCheckbox("fetchedRate")}/> fetchedRate
+            <input type="checkbox" name="fetchedBytesRate" id="fetchedBytesRate" defaultChecked={true} onClick={() => ClickCheckbox("fetchedBytesRate")} /> fetchedBytesRate
+            <input type="checkbox" name="fetchedBatchesRate" id="fetchedBatchesRate" defaultChecked={true} onClick={() => ClickCheckbox("fetchedBatchesRate")} /> fetchedBatchesRate
+            <input type="checkbox" name="parseRequestedRate" id="parseRequestedRate" defaultChecked={true} onClick={() => ClickCheckbox("parseRequestedRate")} /> parseRequestedRate
             <br/>
-            <input type="checkbox" name="parseRecievedRate" id="parseRecievedRate" onClick={() => ClickCheckbox("parseRecievedRate")} /> parseRecievedRate
-            <input type="checkbox" name="filterTotalRate" id="filterTotalRate" onClick={() => ClickCheckbox("filterTotalRate")} /> filterTotalRate
-            <input type="checkbox" name="filterDiscardedRate" id="filterDiscardedRate" onClick={() => ClickCheckbox("filterDiscardedRate")} /> filterDiscardedRate
-            <input type="checkbox" name="filterAcceptedRate" id="filterAcceptedRate" onClick={() => ClickCheckbox("filterAcceptedRate")} /> filterAcceptedRate
+            <input type="checkbox" name="parseRecievedRate" id="parseRecievedRate" defaultChecked={true} onClick={() => ClickCheckbox("parseRecievedRate")} /> parseRecievedRate
+            <input type="checkbox" name="filterTotalRate" id="filterTotalRate" defaultChecked={true} onClick={() => ClickCheckbox("filterTotalRate")} /> filterTotalRate
+            <input type="checkbox" name="filterDiscardedRate" id="filterDiscardedRate" defaultChecked={true} onClick={() => ClickCheckbox("filterDiscardedRate")} /> filterDiscardedRate
+            <input type="checkbox" name="filterAcceptedRate" id="filterAcceptedRate" defaultChecked={true} onClick={() => ClickCheckbox("filterAcceptedRate")} /> filterAcceptedRate
         </div>
     )
 }

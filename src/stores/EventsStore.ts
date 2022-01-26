@@ -15,14 +15,14 @@ class EventsStore {
         }
     };
     checkboxes: ShowLines = {
-        fetchedRate: false,
-        fetchedBytesRate: false,
-        fetchedBatchesRate: false,
-        parseRequestedRate: false,
-        parseRecievedRate: false,
-        filterTotalRate: false,
-        filterDiscardedRate: false,
-        filterAcceptedRate: false
+        fetchedRate: true,
+        fetchedBytesRate: true,
+        fetchedBatchesRate: true,
+        parseRequestedRate: true,
+        parseRecievedRate: true,
+        filterTotalRate: true,
+        filterDiscardedRate: true,
+        filterAcceptedRate: true
     }
     merger: Merger[] = [];
     lastMerger: number = 0;
@@ -102,9 +102,7 @@ class EventsStore {
     showLine(str: string, fl: boolean) {
         runInAction(() => {
             this.checkboxes[str] = fl;
-            
         })
-        console.log(this.checkboxes[str]);
     }
 }
 
