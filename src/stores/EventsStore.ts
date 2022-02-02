@@ -115,6 +115,9 @@ class EventsStore {
                 runInAction(() => {
                     this.merger.push({id: +messageEvent.lastEventId, merger: data.merger - this.lastMerger});
                     this.lastMerger = data.merger;
+                    if (this.merger.length > 10) {
+                        this.merger.shift();
+                    }
                 })
             }
         })
