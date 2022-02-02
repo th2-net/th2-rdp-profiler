@@ -6,6 +6,13 @@ import fetchEvents from "../api/fetchEvents";
 import { runInAction, action, computed, makeObservable, observable } from "mobx";
 import { strictEqual } from "assert";
 import { store } from "..";
+import {createUseStyles} from "react-jss";
+
+// const useStyles = createUseStyles({
+//     error: {
+//         backgroundColor: "red",
+//     }
+// })
 
 class EventsStore {
     isLoading = true;
@@ -40,7 +47,23 @@ class EventsStore {
     }
     
     getPipelineStatuses = (link: string) => { 
+        const button = document.querySelector('button');
+        runInAction(() => {
+            this.isLoading = true;
+            const streams = Object.keys(this.chartData);
+            streams.forEach(stream => {
+                delete this.chartData[stream];
+            })
+            this.merger = [];
+            this.lastMerger = 0;
+        })
         const eventSource = new EventSource(link);
+        
+        // const input = document.querySelector("#link_input");
+
+        // eventSource.onerror = () => {
+        //     console.log("Error");
+        // }
         eventSource.addEventListener("pipeline_status", event => {
             const messageEvent = (event as MessageEvent);
             const data: PipelineStatus = JSON.parse(messageEvent.data);
@@ -98,6 +121,11 @@ class EventsStore {
         eventSource.addEventListener("close", event => {
             eventSource.close();
         })
+        if (button?.onclick) {
+            button.onclick = function () {
+                eventSource.close();
+            }
+        }
     }
     showLine(str: string, fl: boolean) {
         runInAction(() => {
