@@ -1,10 +1,8 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import Form from "./components/Form";
 import Charts from "./components/Charts"; 
 import {observer} from "mobx-react-lite";
 import {createUseStyles} from "react-jss";
-import useEventsStore from './hooks/useEventsStore';
-import { store } from '.';
 
 const useStyles = createUseStyles({
   '@global': {
@@ -18,6 +16,7 @@ const useStyles = createUseStyles({
 })
 function App() { 
   const classes = useStyles(); 
+  
   return (
     <div>
       <Form />

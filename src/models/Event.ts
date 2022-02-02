@@ -1,5 +1,3 @@
-import { NumberLiteralType } from "typescript";
-
 export type Stream = {
     startTime: number;
     timeSinceStartProcessing: number;

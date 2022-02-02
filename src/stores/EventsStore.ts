@@ -2,10 +2,7 @@ import ChartData from "../models/ChartData";
 import PipelineStatus from "../models/Event";
 import ShowLines from "../models/ShowLines";
 import { Merger } from "../models/ChartData";
-import fetchEvents from "../api/fetchEvents";
-import { runInAction, action, computed, makeObservable, observable } from "mobx";
-import { strictEqual } from "assert";
-import { store } from "..";
+import { runInAction, makeObservable, observable } from "mobx";
 
 class EventsStore {
     isLoading = true;

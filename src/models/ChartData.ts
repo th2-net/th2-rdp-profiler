@@ -15,7 +15,6 @@ export default interface ChartData {
         data: Data[];
         lastTimestamp?: number;
     }
-
 }
 
 export type Merger = {
