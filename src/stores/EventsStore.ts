@@ -6,13 +6,6 @@ import fetchEvents from "../api/fetchEvents";
 import { runInAction, action, computed, makeObservable, observable } from "mobx";
 import { strictEqual } from "assert";
 import { store } from "..";
-import {createUseStyles} from "react-jss";
-
-// const useStyles = createUseStyles({
-//     error: {
-//         backgroundColor: "red",
-//     }
-// })
 
 class EventsStore {
     isLoading = true;
@@ -58,13 +51,18 @@ class EventsStore {
             this.lastMerger = 0;
         })
         const eventSource = new EventSource(link);
-        
-        // const input = document.querySelector("#link_input");
+    
+        const input = document.querySelector('input');
+        let style = document.createElement('style');
+        style.innerHTML = '.error { background-color: #fa8072; }';
+        input?.appendChild(style);
 
-        // eventSource.onerror = () => {
-        //     console.log("Error");
-        // }
+        eventSource.onerror = () => {            
+            input?.classList.add('error');
+        }
+
         eventSource.addEventListener("pipeline_status", event => {
+            input?.classList.remove('error');
             const messageEvent = (event as MessageEvent);
             const data: PipelineStatus = JSON.parse(messageEvent.data);
             const streams = Object.keys(data.streams); 
