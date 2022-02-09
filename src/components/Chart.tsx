@@ -56,7 +56,7 @@ function Chart({stream}: Props) {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="startTime" />
+                        <XAxis dataKey="processingTime" />
                         <YAxis />
                         <Tooltip />
                         <Legend />

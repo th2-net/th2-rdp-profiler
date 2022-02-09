@@ -70,7 +70,7 @@ class EventsStore {
                     streams.forEach(stream => {
                         this.chartData[stream] = {data: [], lastTimestamp: 0};
                         this.chartData[stream].data.push(
-                            {startTime: 0,
+                            {processingTime: 0,
                             fetchedRate: 0,
                             fetchedBytesRate: 0,
                             fetchedBatchesRate: 0,
@@ -95,20 +95,20 @@ class EventsStore {
                         runInAction(() => {
                                 this.chartData[stream].data.push(
                                     {
-                                        startTime: data.startTime,
-                                        fetchedRate: data.counters[stream].fetched / (data.startTime / 1000),
-                                        fetchedBytesRate: data.counters[stream].fetchedBytes / (data.startTime / 1000),
-                                        fetchedBatchesRate: data.counters[stream].fetchedBatches / (data.startTime / 1000),
-                                        parsePreparedRate: data.counters[stream].parsePrepared / (data.startTime / 1000),
-                                        parseRequestedRate: data.counters[stream].parseRequested / (data.startTime / 1000),
-                                        parseReceivedTotalRate: data.counters[stream].parseReceivedTotal / (data.startTime / 1000),
-                                        parseReceivedFailedRate: data.counters[stream].parseReceivedFailed / (data.startTime / 1000),
-                                        filterTotalRate: data.counters[stream].filterTotal / (data.startTime / 1000),
-                                        filterDiscardedRate: data.counters[stream].filterDiscarded / (data.startTime / 1000),
-                                        filterAcceptedRate: data.counters[stream].filterAccepted / (data.startTime / 1000)
+                                        processingTime: data.processingTime / 1000,
+                                        fetchedRate: data.counters[stream].fetched / (data.processingTime / 1000),
+                                        fetchedBytesRate: data.counters[stream].fetchedBytes / (data.processingTime / 1000),
+                                        fetchedBatchesRate: data.counters[stream].fetchedBatches / (data.processingTime / 1000),
+                                        parsePreparedRate: data.counters[stream].parsePrepared / (data.processingTime / 1000),
+                                        parseRequestedRate: data.counters[stream].parseRequested / (data.processingTime / 1000),
+                                        parseReceivedTotalRate: data.counters[stream].parseReceivedTotal / (data.processingTime / 1000),
+                                        parseReceivedFailedRate: data.counters[stream].parseReceivedFailed / (data.processingTime / 1000),
+                                        filterTotalRate: data.counters[stream].filterTotal / (data.processingTime / 1000),
+                                        filterDiscardedRate: data.counters[stream].filterDiscarded / (data.processingTime / 1000),
+                                        filterAcceptedRate: data.counters[stream].filterAccepted / (data.processingTime / 1000)
                                     }
                                 )
-                                this.chartData[stream].lastTimestamp = data.startTime;
+                                this.chartData[stream].lastTimestamp = data.processingTime;
                             }
                         )
                     }

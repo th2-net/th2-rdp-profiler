@@ -1,5 +1,5 @@
 export type Data = {
-    startTime: number;
+    processingTime: number;
     fetchedRate: number;
     fetchedBytesRate: number;
     fetchedBatchesRate: number;
