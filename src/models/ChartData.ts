@@ -1,10 +1,12 @@
 export type Data = {
-    timeSinceStartProcessing: number;
+    startTime: number;
     fetchedRate: number;
     fetchedBytesRate: number;
     fetchedBatchesRate: number;
+    parsePreparedRate: number;
     parseRequestedRate: number;
-    parseReceivedRate: number;
+    parseReceivedTotalRate: number;
+    parseReceivedFailedRate: number;
     filterTotalRate: number;
     filterDiscardedRate: number;
     filterAcceptedRate: number;

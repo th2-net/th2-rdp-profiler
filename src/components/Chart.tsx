@@ -56,15 +56,17 @@ function Chart({stream}: Props) {
                         }}
                     >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="timeSinceStartProcessing" />
+                        <XAxis dataKey="startTime" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
                         {PrintRateLine("fetchedRate", "#8884d8")}
                         {PrintRateLine("fetchedBytesRate", "#ff9900")}
                         {PrintRateLine("fetchedBatchesRate", "#ff00cc")}
+                        {PrintRateLine("parsePreparedRate", "#008b8b")}
                         {PrintRateLine("parseRequestedRate", "#f44336")}
-                        {PrintRateLine("parseRecievedRate", "#2986cc")}
+                        {PrintRateLine("parseRecievedTotalRate", "#2986cc")}
+                        {PrintRateLine("parseRecievedFailedRate", "#ffa07a")}
                         {PrintRateLine("filterTotalRate", "#6aa84f")}
                         {PrintRateLine("filterDiscardedRate", "#b45f06")}
                         {PrintRateLine("filterAcceptedRate", "#5b5b5b")}

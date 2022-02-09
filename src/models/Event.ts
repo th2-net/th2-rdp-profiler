@@ -1,22 +1,22 @@
 export type Stream = {
-    startTime: number;
-    timeSinceStartProcessing: number;
-    counters: {
-        fetched: number;
-        fetchedBytes: number;
-        fetchedBatches: number;
-        parseRequested: number;
-        parseReceived: number;
-        filterTotal: number;
-        filterDiscarded: number;
-        filterAccepted: number;
-    }
+    fetched: number;
+    fetchedBytes: number;
+    fetchedBatches: number;
+    parsePrepared: number;
+    parseRequested: number;
+    parseReceivedTotal: number;
+    parseReceivedFailed: number;
+    filterTotal: number;
+    filterDiscarded: number;
+    filterAccepted: number;
 }
 
 export default interface PipelineStatus {
-    streams: {
+    startTime: number;
+    processingTime: number;
+    returned: number;
+    counters: {
         [name: string]: Stream;
-    }
-    merger: number;
+    } 
 }
 
