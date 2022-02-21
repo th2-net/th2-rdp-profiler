@@ -1,3 +1,18 @@
+/** *****************************************************************************
+ * Copyright 2020-2020 Exactpro (Exactpro Systems Limited)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ***************************************************************************** */
 /* eslint-disable no-template-curly-in-string */
 import React from 'react';
 import {observer} from 'mobx-react-lite'; 
@@ -8,6 +23,7 @@ import {createUseStyles} from "react-jss";
 type Props = {
     stream: string;
 }
+
 const colors : string[] = ["#8884d8", "#ff9900", "#ff00cc", "#008b8b", "#f44336", "#2986cc", "#ffa07a",  "#6aa84f", "#b45f06", "#5b5b5b", "#ff83cc", "#5f5f5f", "#fff434", "#6bf42c", "#f42c65", "#9e5f4c", "#31406e", "#1f0f5e", "#00755a", "#677520", "#054016", "#572731", "#ad7a2d", "#85cc39", "#0095ff", "#50249c", "#008761", "#55236e", "#5c2200", "#5c6647", "#2f7039", "#3c7e8c", "#1c005e", "#407363", "#7a38ff", "#183823", "#5f5199"];
 
 const useStyles = createUseStyles({
@@ -59,16 +75,6 @@ function Chart({stream}: Props) {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        {/* {PrintRateLine("fetched", "#8884d8")}
-                        {PrintRateLine("fetchedBytes", "#ff9900")}
-                        {PrintRateLine("fetchedBatches", "#ff00cc")}
-                        {PrintRateLine("parsePrepared", "#008b8b")}
-                        {PrintRateLine("parseRequested", "#f44336")}
-                        {PrintRateLine("parseRecievedTotal", "#2986cc")}
-                        {PrintRateLine("parseRecievedFailed", "#ffa07a")}
-                        {PrintRateLine("filterTotal", "#6aa84f")}
-                        {PrintRateLine("filterDiscarded", "#b45f06")}
-                        {PrintRateLine("filterAccepted", "#5b5b5b")} */}
                         {counters.map((counter, index) => {
                             if (store.checkboxes[counter] === true) {
                                 return(
