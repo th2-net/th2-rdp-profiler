@@ -28,6 +28,8 @@ class EventsStore {
     merger: Merger[] = [];
     lastMerger: number = 0;
     pipelineStatuses: PipelineStatus[] = [];
+    streams: string[] = [];
+    counters: string[] = [];
 
     constructor() {
         makeObservable(this, {
@@ -37,6 +39,8 @@ class EventsStore {
             merger: observable,
             lastMerger: observable,
             isLoading: observable,
+            streams: observable,
+            counters: observable
         });
     }
     
@@ -66,20 +70,22 @@ class EventsStore {
             input?.classList.remove('error');
             const messageEvent = (event as MessageEvent);
             const data: PipelineStatus = JSON.parse(messageEvent.data);
-            const streams = Object.keys(data.counters);
-            console.log(streams);
-            const streamExample = streams.pop();
-            let counters : string[] = [];
-            if (streamExample) {
-                counters = Object.keys(data.counters[streamExample]);
-                streams.push(streamExample);
-            }  
             if (this.isLoading === true) {
                 runInAction(() => {
-                    streams.forEach(stream => {
+                    this.streams = Object.keys(data.counters);
+                    const streamExample = this.streams.pop();
+                    if (streamExample) {
+                        this.counters = Object.keys(data.counters[streamExample])
+                        this.streams.push(streamExample);
+                    }
+                })
+            }
+            if (this.isLoading === true) {
+                runInAction(() => {
+                    this.streams.forEach(stream => {
                         this.chartData[stream] = {data: [], lastTimestamp: 0};
                         let cntrs : Data = {};
-                        counters.forEach(counter => {
+                        this.counters.forEach(counter => {
                             cntrs[counter] = 0;
                             this.checkboxes[counter] = true;
                         })
@@ -88,8 +94,8 @@ class EventsStore {
                     this.isLoading = false;
                 })
             } else {
-                streams.forEach(stream => { 
-                    if (this.chartData[stream].lastTimestamp !== data.startTime) {
+                this.streams.forEach(stream => { 
+                    if ((this.chartData[stream].lastTimestamp !== data.startTime) && (data.counters !== undefined)) {
                         if (this.chartData[stream].data.length > 10) {
                             runInAction(() => {
                                 this.chartData[stream].data.shift();
@@ -98,7 +104,7 @@ class EventsStore {
                         runInAction(() => {
                                 let cntrs: Data = {};
                                 cntrs['processingTime'] = data.processingTime / 1000;
-                                counters.forEach(counter => {
+                                this.counters.forEach(counter => {
                                     cntrs[counter] = data.counters[stream][counter] / (data.processingTime / 1000)
                                 })
                                 this.chartData[stream].data.push(cntrs);
