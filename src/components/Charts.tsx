@@ -18,7 +18,6 @@ import React from 'react';
 import {observer} from 'mobx-react-lite'; 
 import useEventsStore from '../hooks/useEventsStore';
 import Chart from './Chart';
-import MergerChart from './MergerChart';
 import Checkboxes from "./Checkboxes";
 
 function Charts() {
@@ -32,8 +31,7 @@ function Charts() {
         return(
             <div>
                 <Checkboxes />
-                {streams.map((stream) => <Chart stream={stream}/>)}
-                {/* <MergerChart/> */}
+                {streams.map((stream) => <Chart stream={stream}/>)} 
             </div>
         )
     }

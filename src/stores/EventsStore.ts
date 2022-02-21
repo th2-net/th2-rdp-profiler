@@ -18,15 +18,12 @@ import ChartData from "../models/ChartData";
 import PipelineStatus from "../models/Event";
 import ShowLines from "../models/ShowLines";
 import Data from "../models/Data";
-import { Merger } from "../models/ChartData";
 import { runInAction, makeObservable, observable } from "mobx";
 
 class EventsStore {
     isLoading = true;
     chartData: ChartData = {};
     checkboxes: ShowLines = {};
-    merger: Merger[] = [];
-    lastMerger: number = 0;
     pipelineStatuses: PipelineStatus[] = [];
     streams: string[] = [];
     counters: string[] = [];
@@ -36,8 +33,6 @@ class EventsStore {
             pipelineStatuses: observable,
             chartData: observable,
             checkboxes: observable,
-            merger: observable,
-            lastMerger: observable,
             isLoading: observable,
             streams: observable,
             counters: observable
@@ -52,8 +47,6 @@ class EventsStore {
             streams.forEach(stream => {
                 delete this.chartData[stream];
             })
-            this.merger = [];
-            this.lastMerger = 0;
         })
         const eventSource = new EventSource(link);
     

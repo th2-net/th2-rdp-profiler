@@ -42,14 +42,6 @@ function Checkboxes() {
             store.showLine(str, checkbox.checked);
         }
     }
-
-    // function PrintCheckbox(str: string) {
-    //     return(
-    //         <span>
-    //             <input type="checkbox" name={str} id={str} defaultChecked={true} onClick={() => ClickCheckbox(str)}/> {str}
-    //         </span>
-    //     )
-    // }
  
     return(
         <div className={classes.checkboxes}>
