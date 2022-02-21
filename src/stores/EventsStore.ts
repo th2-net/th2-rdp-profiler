@@ -1,28 +1,14 @@
 import ChartData from "../models/ChartData";
 import PipelineStatus from "../models/Event";
 import ShowLines from "../models/ShowLines";
+import Data from "../models/Data";
 import { Merger } from "../models/ChartData";
 import { runInAction, makeObservable, observable } from "mobx";
 
 class EventsStore {
     isLoading = true;
-    chartData: ChartData = {
-        "test": {
-            data: [],
-        }
-    };
-    checkboxes: ShowLines = {
-        fetchedRate: true,
-        fetchedBytesRate: true,
-        fetchedBatchesRate: true,
-        parsePreparedRate: true,
-        parseRequestedRate: true,
-        parseRecievedTotalRate: true,
-        parseRecievedFailedRate: true,
-        filterTotalRate: true,
-        filterDiscardedRate: true,
-        filterAcceptedRate: true
-    }
+    chartData: ChartData = {};
+    checkboxes: ShowLines = {};
     merger: Merger[] = [];
     lastMerger: number = 0;
     pipelineStatuses: PipelineStatus[] = [];
@@ -64,23 +50,24 @@ class EventsStore {
             input?.classList.remove('error');
             const messageEvent = (event as MessageEvent);
             const data: PipelineStatus = JSON.parse(messageEvent.data);
-            const streams = Object.keys(data.counters); 
+            const streams = Object.keys(data.counters);
+            console.log(streams);
+            const streamExample = streams.pop();
+            let counters : string[] = [];
+            if (streamExample) {
+                counters = Object.keys(data.counters[streamExample]);
+                streams.push(streamExample);
+            }  
             if (this.isLoading === true) {
                 runInAction(() => {
                     streams.forEach(stream => {
                         this.chartData[stream] = {data: [], lastTimestamp: 0};
-                        this.chartData[stream].data.push(
-                            {processingTime: 0,
-                            fetchedRate: 0,
-                            fetchedBytesRate: 0,
-                            fetchedBatchesRate: 0,
-                            parsePreparedRate: 0,
-                            parseRequestedRate: 0,
-                            parseReceivedTotalRate: 0,
-                            parseReceivedFailedRate: 0,
-                            filterTotalRate: 0,
-                            filterDiscardedRate: 0,
-                            filterAcceptedRate: 0});
+                        let cntrs : Data = {};
+                        counters.forEach(counter => {
+                            cntrs[counter] = 0;
+                            this.checkboxes[counter] = true;
+                        })
+                        this.chartData[stream].data.push(cntrs);
                     })
                     this.isLoading = false;
                 })
@@ -93,21 +80,12 @@ class EventsStore {
                             })
                         }
                         runInAction(() => {
-                                this.chartData[stream].data.push(
-                                    {
-                                        processingTime: data.processingTime / 1000,
-                                        fetchedRate: data.counters[stream].fetched / (data.processingTime / 1000),
-                                        fetchedBytesRate: data.counters[stream].fetchedBytes / (data.processingTime / 1000),
-                                        fetchedBatchesRate: data.counters[stream].fetchedBatches / (data.processingTime / 1000),
-                                        parsePreparedRate: data.counters[stream].parsePrepared / (data.processingTime / 1000),
-                                        parseRequestedRate: data.counters[stream].parseRequested / (data.processingTime / 1000),
-                                        parseReceivedTotalRate: data.counters[stream].parseReceivedTotal / (data.processingTime / 1000),
-                                        parseReceivedFailedRate: data.counters[stream].parseReceivedFailed / (data.processingTime / 1000),
-                                        filterTotalRate: data.counters[stream].filterTotal / (data.processingTime / 1000),
-                                        filterDiscardedRate: data.counters[stream].filterDiscarded / (data.processingTime / 1000),
-                                        filterAcceptedRate: data.counters[stream].filterAccepted / (data.processingTime / 1000)
-                                    }
-                                )
+                                let cntrs: Data = {};
+                                cntrs['processingTime'] = data.processingTime / 1000;
+                                counters.forEach(counter => {
+                                    cntrs[counter] = data.counters[stream][counter] / (data.processingTime / 1000)
+                                })
+                                this.chartData[stream].data.push(cntrs);
                                 this.chartData[stream].lastTimestamp = data.processingTime;
                             }
                         )

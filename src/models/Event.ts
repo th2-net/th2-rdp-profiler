@@ -1,14 +1,5 @@
 export type Stream = {
-    fetched: number;
-    fetchedBytes: number;
-    fetchedBatches: number;
-    parsePrepared: number;
-    parseRequested: number;
-    parseReceivedTotal: number;
-    parseReceivedFailed: number;
-    filterTotal: number;
-    filterDiscarded: number;
-    filterAccepted: number;
+    [counter: string]: number;
 }
 
 export default interface PipelineStatus {

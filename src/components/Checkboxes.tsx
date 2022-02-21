@@ -2,6 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react-lite'; 
 import useEventsStore from '../hooks/useEventsStore';
 import {createUseStyles} from "react-jss";
+import { toJS } from 'mobx';
 
 const useStyles = createUseStyles({
     checkboxes: {
@@ -13,7 +14,8 @@ const useStyles = createUseStyles({
 function Checkboxes() {
     const store = useEventsStore();
     const classes = useStyles();
-        
+    const checkboxes = Object.keys(store.checkboxes);
+
     function ClickCheckbox(str: string) {
         const checkbox: HTMLInputElement | null = document.querySelector(`#${str}`);
         if (checkbox?.checked !== undefined) {
@@ -21,21 +23,36 @@ function Checkboxes() {
         }
     }
 
+    // function PrintCheckbox(str: string) {
+    //     return(
+    //         <span>
+    //             <input type="checkbox" name={str} id={str} defaultChecked={true} onClick={() => ClickCheckbox(str)}/> {str}
+    //         </span>
+    //     )
+    // }
+ 
     return(
         <div className={classes.checkboxes}>
             Choose to show:
             <br/>
-            <input type="checkbox" name="fetchedRate" id="fetchedRate" defaultChecked={true} onClick={() => ClickCheckbox("fetchedRate")}/> fetchedRate
-            <input type="checkbox" name="fetchedBytesRate" id="fetchedBytesRate" defaultChecked={true} onClick={() => ClickCheckbox("fetchedBytesRate")} /> fetchedBytesRate
-            <input type="checkbox" name="fetchedBatchesRate" id="fetchedBatchesRate" defaultChecked={true} onClick={() => ClickCheckbox("fetchedBatchesRate")} /> fetchedBatchesRate
-            <input type="checkbox" name="parsePreparedRate" id="parsePreparedRate" defaultChecked={true} onClick={() => ClickCheckbox("parsePreparedRate")} /> parsePreparedRate
-            <input type="checkbox" name="parseRequestedRate" id="parseRequestedRate" defaultChecked={true} onClick={() => ClickCheckbox("parseRequestedRate")} /> parseRequestedRate
-            <br/>
-            <input type="checkbox" name="parseRecievedTotalRate" id="parseRecievedTotalRate" defaultChecked={true} onClick={() => ClickCheckbox("parseRecievedTotalRate")} /> parseRecievedTotalRate
-            <input type="checkbox" name="parseRecievedRate" id="parseRecievedFailedRate" defaultChecked={true} onClick={() => ClickCheckbox("parseRecievedFailedRate")} /> parseRecievedFailedRate
-            <input type="checkbox" name="filterTotalRate" id="filterTotalRate" defaultChecked={true} onClick={() => ClickCheckbox("filterTotalRate")} /> filterTotalRate
-            <input type="checkbox" name="filterDiscardedRate" id="filterDiscardedRate" defaultChecked={true} onClick={() => ClickCheckbox("filterDiscardedRate")} /> filterDiscardedRate
-            <input type="checkbox" name="filterAcceptedRate" id="filterAcceptedRate" defaultChecked={true} onClick={() => ClickCheckbox("filterAcceptedRate")} /> filterAcceptedRate
+            {checkboxes.map((checkbox, ind) => 
+                {
+                    if (ind % 2 === 0) {
+                        return(
+                            <span>
+                                <input type="checkbox" name={checkbox} id={checkbox} defaultChecked={true} onClick={() => ClickCheckbox(checkbox)}/> {checkbox}
+                            </span>    
+                        )
+                    } else {
+                        return(
+                            <span>
+                                <input type="checkbox" name={checkbox} id={checkbox} defaultChecked={true} onClick={() => ClickCheckbox(checkbox)}/> {checkbox}
+                                <br />
+                            </span>
+                        )
+                    }
+                }
+            )}
         </div>
     )
 }
