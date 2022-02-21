@@ -24,7 +24,11 @@ const useStyles = createUseStyles({
     checkboxes: {
         marginTop: "15px",
         marginLeft: "30px"
+    },
+    checkbox: {
+        marginRight: "20px"
     }
+
 })
 
 function Checkboxes() {
@@ -53,15 +57,15 @@ function Checkboxes() {
             <br/>
             {checkboxes.map((checkbox, ind) => 
                 {
-                    if (ind % 2 === 0) {
+                    if (ind % 6 !== 0 || ind === 0) {
                         return(
-                            <span>
+                            <span className={classes.checkbox}>
                                 <input type="checkbox" name={checkbox} id={checkbox} defaultChecked={true} onClick={() => ClickCheckbox(checkbox)}/> {checkbox}
                             </span>    
                         )
                     } else {
                         return(
-                            <span>
+                            <span className={classes.checkbox}>
                                 <input type="checkbox" name={checkbox} id={checkbox} defaultChecked={true} onClick={() => ClickCheckbox(checkbox)}/> {checkbox}
                                 <br />
                             </span>
