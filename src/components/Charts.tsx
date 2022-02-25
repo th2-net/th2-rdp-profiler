@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ***************************************************************************** */
-
 import React from 'react';
 import {observer} from 'mobx-react-lite'; 
 import useEventsStore from '../hooks/useEventsStore';
 import Chart from './Chart';
+import FetchedBytesChart from './FetchedBytesChart';
 import Checkboxes from "./Checkboxes";
 
 function Charts() {
@@ -31,6 +31,7 @@ function Charts() {
         return(
             <div>
                 <Checkboxes />
+                {streams.map((stream) => <FetchedBytesChart stream={stream}/>)}
                 {streams.map((stream) => <Chart stream={stream}/>)} 
             </div>
         )

@@ -19,6 +19,7 @@ import {observer} from 'mobx-react-lite';
 import useEventsStore from '../hooks/useEventsStore';
 import {createUseStyles} from "react-jss";
 import { toJS } from 'mobx';
+import FetchedBytesChart from './FetchedBytesChart';
 
 const useStyles = createUseStyles({
     checkboxes: {
@@ -45,17 +46,22 @@ function Checkboxes() {
  
     return(
         <div className={classes.checkboxes}>
-            Choose to show:
+            Fetched bytes chart:
+            <div className={classes.checkbox}>
+                <input type="checkbox" name={"fetchedBytes"} id={"fetchedBytes"} defaultChecked={true} onClick={() => ClickCheckbox("fetchedBytes")}/> fetchedBytes
+            </div>    
+            <br/>
+            Choose to show lines:
             <br/>
             {checkboxes.map((checkbox, ind) => 
                 {
-                    if (ind % 6 !== 0 || ind === 0) {
+                    if ((ind % 6 !== 0 || ind === 0) && (checkbox !== "fetchedBytes")) {
                         return(
                             <span className={classes.checkbox}>
                                 <input type="checkbox" name={checkbox} id={checkbox} defaultChecked={true} onClick={() => ClickCheckbox(checkbox)}/> {checkbox}
                             </span>    
                         )
-                    } else {
+                    } else if (checkbox !== "fetchedBytes") {
                         return(
                             <span className={classes.checkbox}>
                                 <input type="checkbox" name={checkbox} id={checkbox} defaultChecked={true} onClick={() => ClickCheckbox(checkbox)}/> {checkbox}

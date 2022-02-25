@@ -42,55 +42,42 @@ function Chart({stream}: Props) {
     const classes = useStyles();
     const counters = Object.keys(store.checkboxes);
 
-    function PrintRateLine(rate: string, color: string) {
-        if (store.checkboxes[rate] === true) {
-            return(
-                <Line 
-                type="monotone"
-                dataKey={rate}
-                stroke={color}
-                activeDot={{ r: 8 }}
-                isAnimationActive={false}
-                />
-            )
-        }
-    }
     return(
         <div>
-                <br/>
-                <div className={classes.name}>{stream}:</div>
-                <br/>
-                <ResponsiveContainer width="95%" height={400}>
-                    <LineChart 
-                        data={store.chartData[stream].data.slice()}
-                        margin={{
-                            top: 5,
-                            right: 30,
-                            left: 20,
-                            bottom: 5
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="processingTime" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        {counters.map((counter, index) => {
-                            if (store.checkboxes[counter] === true) {
-                                return(
-                                    <Line 
-                                    type="monotone"
-                                    dataKey={counter}
-                                    stroke={colors[index]}
-                                    activeDot={{ r: 8 }}
-                                    isAnimationActive={false}
-                                    />
-                                )
-                            }
-                        })}
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
+            <br/>
+            <div className={classes.name}>{stream}:</div>
+            <br/>
+            <ResponsiveContainer width="95%" height={400}>
+                <LineChart 
+                    data={store.chartData[stream].data.slice()}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="processingTime" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    {counters.map((counter, index) => {
+                        if (store.checkboxes[counter] === true && counter !== "fetchedBytes") {
+                            return(
+                                <Line 
+                                type="monotone"
+                                dataKey={counter}
+                                stroke={colors[index]}
+                                activeDot={{ r: 8 }}
+                                isAnimationActive={false}
+                                />
+                            )
+                        }
+                    })}
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
     )
 }
 
