@@ -23,7 +23,7 @@ import {createUseStyles} from "react-jss";
 type Props = {
     stream: string;
 }
-//
+
 const colors : string[] = ["#8884d8", "#ff9900", "#ff00cc", "#008b8b", "#f44336", "#2986cc", "#ffa07a",  "#6aa84f", "#b45f06", "#5b5b5b", "#ff83cc", "#5f5f5f", "#fff434", "#6bf42c", "#f42c65", "#9e5f4c", "#31406e", "#1f0f5e", "#00755a", "#677520", "#054016", "#572731", "#ad7a2d", "#85cc39", "#0095ff", "#50249c", "#008761", "#55236e", "#5c2200", "#5c6647", "#2f7039", "#3c7e8c", "#1c005e", "#407363", "#7a38ff", "#183823", "#5f5199"];
 
 const useStyles = createUseStyles({
