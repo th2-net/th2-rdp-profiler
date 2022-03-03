@@ -1,5 +1,5 @@
 FROM node:14.18 AS build
-ARG app_version=0.0.0
+ARG app_version=0.0.1
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends make build-essential
 WORKDIR /home/node
