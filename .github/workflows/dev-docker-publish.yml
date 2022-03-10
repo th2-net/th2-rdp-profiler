@@ -15,36 +15,35 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      # Prepare custom build version
-      - uses: actions/setup-java@v1
-        with:
-          java-version: 11
+
       - name: Get branch name
         id: branch
         run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
-      - name: Get release_version
-        id: ver
-        uses: christian-draeger/read-properties@1.0.1
+
+      - id: version
+        name: resolve app version
+        uses: notiz-dev/github-action-json-property@release
         with:
-          path: gradle.properties
-          property: release_version
+          path: package.json
+          prop_path: version
+
       - name: Build custom release version
         id: release_ver
-        run: echo ::set-output name=value::"${{ steps.ver.outputs.value }}-${{ steps.branch.outputs.branch_name }}-${{ github.run_id }}"
+        run: echo ::set-output name=value::"${{ steps.version.outputs.prop }}-${{ steps.branch.outputs.branch_name }}-${{ github.run_id }}"
       - name: Show custom release version
         run: echo ${{ steps.release_ver.outputs.value }}
-      # Build and publish image
-      - name: Set up Docker Buildx
+
+      - name: set up docker buildx plugin
         uses: docker/setup-buildx-action@v1
-      - uses: docker/login-action@v1
+
+      - name: log in to github container registry
+        uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
-      - run: echo "::set-output name=REPOSITORY_NAME::$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')"
-        id: meta
-      - name: Build and push
-        id: docker_build
+
+      - name: build image & push to registry
         uses: docker/build-push-action@v2
         with:
           push: true
@@ -52,5 +51,4 @@ jobs:
             GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
             GITHUB_ACTOR=${{ github.actor }}
           tags: ghcr.io/${{ github.repository }}:${{ steps.release_ver.outputs.value }}
-          labels: |
-            com.exactpro.th2.${{ steps.meta.outputs.REPOSITORY_NAME }}=${{ steps.ver.outputs.value }}
+          labels: com.exactpro.th2.${{ steps.repo.outputs.REPOSITORY_NAME }}=${{ steps.release_ver.outputs.value }}
