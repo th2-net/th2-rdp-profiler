@@ -48,7 +48,5 @@ jobs:
         with:
           push: true
           build-args: |
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-            GITHUB_ACTOR=${{ github.actor }}
           tags: ghcr.io/${{ github.repository }}:${{ steps.release_ver.outputs.value }}
           labels: com.exactpro.th2.${{ steps.repo.outputs.REPOSITORY_NAME }}=${{ steps.release_ver.outputs.value }}
